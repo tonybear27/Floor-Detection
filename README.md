@@ -15,7 +15,7 @@ libprotoc 3.21.12
 
 ```bash
 conda create -n AMR python=3.8.5 && conda activate AMR
-cd object-detection-api
+cd train
 
 make install
 ```
@@ -52,15 +52,19 @@ OK (skipped=1)
 
 ## Running
 
-Put your testing images at [here](object-detection-api/workspace/test-mask/images/test)
+Put your testing images at [here](images/test)
 
 `python test_images.py` or if you prefer using [Jupter Notebook](test_image.ipynb)
 
-And the result will be stored at [here](object-detection-api/workspace/test-mask/images/test_annotated)
+And the result will be stored at [here](images/test_annotated)
 
 ## Training
 
-Put your training images at [here](object-detection-api/workspace/test-mask/images/train), and your validation images at [here](object-detection-api/workspace/test-mask/images/val)
+First of all, you have to enter the directory
+
+`cd workspace/test-mask` 
+
+Put your training images at [here](train/workspace/test-mask/images/train), and your validation images at [here](train/workspace/test-mask/images/val)
 
 **Note:** Your annotation files must follow COCO format.
 
@@ -83,8 +87,11 @@ And the structure will be
 
 ### Configure Training Pipeline
 
-Create a corresponding model folder in the models directory, such as: **mask_rcnn_inception_resnet_v2_1024x1024_coco17_gpu-8**, and copy \ 
-**pre-trained-models/mask_rcnn_inception_resnet_v2_1024x1024_coco17_gpu-8/pipeline.config**
+Create a corresponding model folder in the models directory, such as: 
+
+**mask_rcnn_inception_resnet_v2_1024x1024_coco17_gpu-8**, and copy 
+
+**pre-trained-models/mask_rcnn_inception_resnet_v2_1024x1024_coco17_gpu-8/pipeline config**
 
 ```bash
 └── test-mask
@@ -94,8 +101,8 @@ Create a corresponding model folder in the models directory, such as: **mask_rcn
     └── pre-trained-models
 ```
 
-`make train`
+After setting, type `make train` to start training.
 
 ## Model Export
 
-`make export`
+After training, you should export the trained model by using `make export`
