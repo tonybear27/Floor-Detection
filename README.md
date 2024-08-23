@@ -1,5 +1,11 @@
 ## Environment Set Up
 
+### My Environment
+
+NVIDIA GeForce RTX 4090
+CUDA 12.1
+Ubuntu 22.01
+
 ### Install Dependencies
 
 ```bash
@@ -60,9 +66,13 @@ And the result will be stored at [here](images/test_annotated)
 
 ## Training
 
-First of all, you have to enter the directory
+First of all, you have to create the working directory and enter it
 
-`cd workspace/test-mask` 
+```bash
+make workspace-mask SAVE_DIR=workspace NAME=test-mask
+
+cd workspace/test-mask 
+```
 
 Put your training images at [here](train/workspace/test-mask/images/train), and your validation images at [here](train/workspace/test-mask/images/val)
 
