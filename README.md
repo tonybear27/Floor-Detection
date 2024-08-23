@@ -1,6 +1,6 @@
 ## Environment Set Up
 
-### My Environment
+### My Hardware & Environment
 
 * NVIDIA GeForce RTX 4090
 
