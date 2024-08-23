@@ -60,7 +60,9 @@ OK (skipped=1)
 
 ### Download
 
-Download SAM model from [here](https://github.com/facebookresearch/segment-anything?tab=readme-ov-file#model-checkpoints)
+Download SAM model checkpoints from [here](https://github.com/facebookresearch/segment-anything?tab=readme-ov-file#model-checkpoints)
+
+You can select the model you want, but nake sure to chage line 31 and line 32 in [test_images.py](test_images.py) 
 
 ## Running
 
