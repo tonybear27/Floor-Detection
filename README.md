@@ -36,7 +36,7 @@ if encounter this error
 option --use-feature: invalid choice: '2020-resolver' (choose from 'fast-deps', 'truststore', 'no-binary-enable-wheel-cache')
 make: *** [Makefile:12: api] Error 2
 ```
-then open the Makefile, change line 15 from 
+then open the [Makefile](train/Makefile), change line 15 from 
 
 `python -m pip install --use-feature=2020-resolver .`
 
