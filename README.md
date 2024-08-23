@@ -1,5 +1,16 @@
 ## Environment Set Up
 
+### Install Dependencies
+
+```bash
+$ conda --version
+conda 24.7.1
+
+$ protoc --version
+libprotoc 3.21.12
+
+```
+
 ### Create the environment, enter the directory and install some needed packages
 
 ```bash
