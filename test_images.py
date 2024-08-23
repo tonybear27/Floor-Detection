@@ -27,7 +27,7 @@ IMAGE_PATHS = glob.glob(os.path.join(IMAGE_DIR, '*'))
 PATH_TO_SAVED_MODEL = './exported-models/mask_rcnn_inception_resnet_v2_1024x1024_coco17_gpu-8' + "/saved_model"
 SAM_CHECKPOINT = 'sam_vit_h_4b8939.pth'
 MODEL_TYPE = 'vit_h'
-DEVICE = 'cpu' if torch.cuda.is_available() else 'cpu'
+DEVICE = 'gpu' if torch.cuda.is_available() else 'cpu'
 
 # Load TensorFlow model
 print('Loading TensorFlow model...', end='')
