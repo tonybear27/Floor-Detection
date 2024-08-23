@@ -12,6 +12,7 @@ import cv2
 
 from object_detection.utils import label_map_util
 from object_detection.utils import ops as utils_ops
+from object_detection.utils import visualization_utils as viz_utils
 from PIL import Image
 from segment_anything import sam_model_registry, SamAutomaticMaskGenerator, SamPredictor
 import warnings
@@ -19,6 +20,8 @@ import warnings
 # Suppress the specific FutureWarning
 warnings.filterwarnings("ignore", category=FutureWarning, 
                         message="You are using `torch.load` with `weights_only=False`")
+
+DEBUG = False
 
 IMAGE_DIR = './images/test/'
 IMAGE_PATHS = glob.glob(os.path.join(IMAGE_DIR, '*'))
@@ -79,12 +82,20 @@ def show_mask(mask):
     mask_image = mask.reshape(h, w, 1) * color.reshape(1, 1, -1)
     return mask_image
 
+def show_points(coords, labels, ax, marker_size = 375):
+    pos_points = coords[labels == 1]
+    neg_points = coords[labels == 0]
+    ax.scatter(pos_points[:, 0], pos_points[:, 1], color='green', marker='*', s=marker_size, edgecolor='white', linewidth=1.25)
+    ax.scatter(neg_points[:, 0], neg_points[:, 1], color='red', marker='*', s=marker_size, edgecolor='white', linewidth=1.25)
+
 
 for idx, image_path in enumerate(IMAGE_PATHS):
     print('Running inference for {}... '.format(image_path))
 
     start = time.time()
     image_np = load_image_into_numpy_array(image_path)
+    if image_path.endswith('.jpg'):
+        image_np = cv2.rotate(image_np, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     input_tensor = tf.convert_to_tensor(image_np)
     input_tensor = input_tensor[tf.newaxis, ...]
@@ -115,8 +126,6 @@ for idx, image_path in enumerate(IMAGE_PATHS):
     detections['detection_masks'] = detections['detection_masks'][0].numpy()
 
     image = Image.fromarray(np.uint8(image_np_with_detections))
-    image_np = np.array(image)
-    image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
 
     width, height = image.size
     (ymin, xmin, ymax, xmax) = detections['detection_boxes'][0]
@@ -124,30 +133,44 @@ for idx, image_path in enumerate(IMAGE_PATHS):
     
     center_x = (x_min + x_max) / 2
     center_y = (y_min + y_max) / 2
-    point = np.array([[center_x, center_y]])
+    point = np.array([[center_x, y_max]])
     label = np.array([1])
-    
+
+    if DEBUG:
+        viz_utils.visualize_boxes_and_labels_on_image_array(
+            image_np_with_detections,
+            detections['detection_boxes'],
+            detections['detection_classes'],
+            detections['detection_scores'],
+            category_index,
+            instance_masks=detections.get('detection_masks'),
+            use_normalized_coordinates=True,
+            max_boxes_to_draw=200,
+            min_score_thresh=.30)
+        
     print(f"Bounding Box Coordinate: ({x_min}, {y_min}, {x_max}, {y_max})")
 
     predictor.set_image(image_np)
     masks, scores, logits = predictor.predict(
         point_coords = point,
         point_labels = label,
-        multimask_output = False
+        multimask_output = True
     )
+    max_idx = np.argmax(scores) 
 
     end = time.time()
 
-    mask_image = show_mask(masks)
-    # print(mask_image.shape)
-    # print(image_np.shape)
-    # alpha = 0.5
-    # beta = 1 - alpha
-    # img = cv2.addWeighted(image_np, alpha, mask_image, beta, 0)
-    output_path = f'images/test_annotated/{idx}.png'
-
-    cv2.imwrite(output_path, mask_image)  
-
+    plt.figure(figsize=(10, 10))
+    plt.imshow(image_np)
+    show_mask(masks[max_idx], plt.gca())
+    show_points(point, label, plt.gca())
+    plt.axis('off')
+    plt.show()
+    
+    if DEBUG:
+        output_path = f'images/test_annotated/{idx}.png'
+        cv2.imwrite(output_path, image_np_with_detections)  
+        print(f"Save as {output_path}")
 
     cpu_usage, gpu_usage= log_hardware_usage()
     print(cpu_usage)
