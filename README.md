@@ -106,3 +106,7 @@ After setting, type `make train` to start training.
 ## Model Export
 
 After training, you should export the trained model by using `make export`
+
+## Reference
+
+[Training reference](https://github.com/TannerGilbert/Tensorflow-Object-Detection-API-train-custom-Mask-R-CNN-model) 
