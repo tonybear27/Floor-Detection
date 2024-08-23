@@ -3,7 +3,7 @@
 ### Create the environment, enter the directory and install some needed packages
 
 ```bash
-conda create -n AMR python=3.8.5 && conda activate AMR`
+conda create -n AMR python=3.8.5 && conda activate AMR
 cd object-detection-api
 
 make install
