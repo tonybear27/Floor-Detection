@@ -58,6 +58,10 @@ OK (skipped=1)
 
 `pip install -r requirements.txt`
 
+### Download
+
+Download SAM model from [here](https://github.com/facebookresearch/segment-anything?tab=readme-ov-file#model-checkpoints)
+
 ## Running
 
 Put your testing images at [here](images/test)
