@@ -2,11 +2,11 @@
 
 ### My Environment
 
-NVIDIA GeForce RTX 4090
+* NVIDIA GeForce RTX 4090
 
-CUDA 12.1
+* CUDA 12.1
 
-Ubuntu 22.01
+* Ubuntu 22.04
 
 ### Install Dependencies
 
