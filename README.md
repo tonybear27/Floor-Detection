@@ -35,7 +35,7 @@ Ran 24 tests in 8.664s
 OK (skipped=1)
 ```
 
-Install other packages
+### Install other packages
 
 `pip install -r requirements.txt`
 
@@ -43,9 +43,9 @@ Install other packages
 
 Put your testing images at [here](object-detection-api/workspace/test-mask/images/test)
 
-And the result will be stored at [here](object-detection-api/workspace/test-mask/images/test_annotated)
-
 `python test_images.py` or if you prefer using [Jupter Notebook](test_image.ipynb)
+
+And the result will be stored at [here](object-detection-api/workspace/test-mask/images/test_annotated)
 
 ## Training
 
